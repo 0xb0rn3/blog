@@ -121,6 +121,7 @@
         .social-link:hover {
             transform: translateY(-2px);
             background: var(--accent-color);
+            color: var(--primary-bg);
             box-shadow: 0 5px 20px var(--shadow-glow);
         }
 
@@ -186,6 +187,7 @@
         .filter-tag:hover,
         .filter-tag.active {
             background: var(--accent-color);
+            color: var(--primary-bg);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px var(--shadow-glow);
         }
@@ -462,12 +464,70 @@
             border-left: 4px solid var(--accent-color);
         }
 
+        .modal-body pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-primary);
+        }
+
         .modal-body blockquote {
             border-left: 4px solid var(--accent-color);
             padding-left: 1rem;
             margin: 1rem 0;
             color: var(--text-secondary);
             font-style: italic;
+        }
+
+        .modal-body img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .modal-body ul, .modal-body ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .modal-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .modal-body th, .modal-body td {
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        .modal-body th {
+            background: var(--secondary-bg);
+            color: var(--accent-color);
+        }
+
+        .modal-body a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .modal-body a:hover {
+            text-decoration: underline;
+        }
+
+        .modal-body hr {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 2rem 0;
+        }
+
+        .error-message {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid rgba(244, 67, 54, 0.3);
+            color: #F44336;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
         }
     </style>
 </head>
@@ -479,17 +539,17 @@
             <h1>0xb0rn3</h1>
             <p>Security Research & Penetration Testing Writeups</p>
             <div class="social-links">
-                <a href="https://github.com/0xb0rn3" class="social-link">
+                <a href="https://github.com/0xb0rn3" class="social-link" target="_blank">
                     <i class="fab fa-github"></i>
                     GitHub
                 </a>
-                <a href="https://instagram.com/theehiv3" class="social-link">
-                    <i class="fab fa-instagram"></i>
-                    Instagram
+                <a href="https://x.com/0xbv1" class="social-link" target="_blank">
+                    <i class="fab fa-x-twitter"></i>
+                    @0xbv1
                 </a>
-                <a href="mailto:q4n0@proton.me" class="social-link">
-                    <i class="fas fa-envelope"></i>
-                    Contact
+                <a href="#" class="social-link" onclick="alert('Discord: 0xbv1'); return false;">
+                    <i class="fab fa-discord"></i>
+                    Discord
                 </a>
             </div>
         </div>
@@ -536,84 +596,41 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
-        // Sample data - in real implementation, this would be loaded from GitHub API or JSON files
-        const writeups = [
-            {
-                id: 1,
-                title: "HackTheBox - Retired Machine Walkthrough",
-                description: "Complete walkthrough of a retired HackTheBox machine focusing on privilege escalation techniques and custom exploit development.",
-                category: "ctf",
-                tags: ["hackthebox", "privilege escalation", "linux", "buffer overflow"],
-                difficulty: "hard",
-                date: "2024-08-20",
-                readTime: "15 min read",
-                folder: "htb-retired-machine"
-            },
-            {
-                id: 2,
-                title: "Setting up Krilin Security Framework",
-                description: "Step-by-step tutorial on installing and configuring the Krilin security framework for penetration testing on Debian systems.",
-                category: "tutorial",
-                tags: ["krilin", "setup", "debian", "pentest"],
-                difficulty: "easy",
-                date: "2024-08-18",
-                readTime: "8 min read",
-                folder: "krilin-setup-tutorial"
-            },
-            {
-                id: 3,
-                title: "CVE-2024-XXXX Analysis & Exploitation",
-                description: "Deep dive into a recent vulnerability discovery, including technical analysis and proof-of-concept exploitation code.",
-                category: "vulnerability",
-                tags: ["cve", "rce", "web application", "exploitation"],
-                difficulty: "hard",
-                date: "2024-08-15",
-                readTime: "20 min read",
-                folder: "cve-2024-analysis"
-            },
-            {
-                id: 4,
-                title: "Advanced SQL Injection Techniques",
-                description: "Exploring advanced SQL injection methodologies including blind SQLi, time-based attacks, and WAF bypass techniques.",
-                category: "web",
-                tags: ["sql injection", "web security", "waf bypass", "database"],
-                difficulty: "medium",
-                date: "2024-08-12",
-                readTime: "12 min read",
-                folder: "advanced-sqli-techniques"
-            },
-            {
-                id: 5,
-                title: "Building Custom Reconnaissance Tools",
-                description: "Creating custom tools for information gathering and reconnaissance using Python and various APIs.",
-                category: "tools",
-                tags: ["python", "reconnaissance", "osint", "automation"],
-                difficulty: "medium",
-                date: "2024-08-10",
-                readTime: "18 min read",
-                folder: "custom-recon-tools"
-            },
-            {
-                id: 6,
-                title: "TryHackMe Room: Advanced Persistence",
-                description: "Complete walkthrough of the Advanced Persistence room on TryHackMe, covering various persistence techniques in Windows environments.",
-                category: "ctf",
-                tags: ["tryhackme", "persistence", "windows", "post-exploitation"],
-                difficulty: "medium",
-                date: "2024-08-08",
-                readTime: "10 min read",
-                folder: "thm-advanced-persistence"
-            }
-        ];
-
-        let filteredWriteups = [...writeups];
+        // Global variables
+        let allWriteups = [];
+        let filteredWriteups = [];
         let currentFilter = 'all';
 
         // Initialize the application
-        function init() {
-            renderWriteups();
+        async function init() {
+            await loadWriteups();
             setupEventListeners();
+        }
+
+        // Load writeups from JSON file
+        async function loadWriteups() {
+            try {
+                const response = await fetch('./assets/writeups/writeups.json');
+                if (!response.ok) {
+                    throw new Error('Failed to load writeups.json');
+                }
+                const data = await response.json();
+                allWriteups = data.writeups || [];
+                filteredWriteups = [...allWriteups];
+                renderWriteups();
+            } catch (error) {
+                console.error('Error loading writeups:', error);
+                // Show error message
+                document.getElementById('writeups-grid').innerHTML = `
+                    <div class="error-message">
+                        <h3>Failed to load writeups</h3>
+                        <p>Please ensure writeups.json exists in /assets/writeups/ directory</p>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
         }
 
         // Render writeups to the grid
@@ -631,25 +648,25 @@
             }
 
             const cards = filteredWriteups.map(writeup => `
-                <div class="writeup-card" data-id="${writeup.id}" onclick="openWriteup(${writeup.id})">
+                <div class="writeup-card" data-id="${writeup.id}" onclick="openWriteup('${writeup.id}')">
                     <div class="card-header">
                         <h3 class="card-title">${writeup.title}</h3>
                         <div class="card-meta">
                             <span><i class="fas fa-calendar"></i> ${formatDate(writeup.date)}</span>
-                            <span class="difficulty-badge difficulty-${writeup.difficulty}">
-                                ${writeup.difficulty.charAt(0).toUpperCase() + writeup.difficulty.slice(1)}
+                            <span class="difficulty-badge difficulty-${writeup.difficulty || 'medium'}">
+                                ${(writeup.difficulty || 'medium').charAt(0).toUpperCase() + (writeup.difficulty || 'medium').slice(1)}
                             </span>
                         </div>
                     </div>
                     <div class="card-content">
                         <p class="card-description">${writeup.description}</p>
                         <div class="card-tags">
-                            ${writeup.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                            ${(writeup.tags || []).map(tag => `<span class="tag">#${tag}</span>`).join('')}
                         </div>
                     </div>
                     <div class="card-footer">
                         <span class="read-time">
-                            <i class="fas fa-clock"></i> ${writeup.readTime}
+                            <i class="fas fa-clock"></i> ${writeup.readTime || '10 min'}
                         </span>
                         <i class="fas fa-arrow-right card-icon"></i>
                     </div>
@@ -693,11 +710,11 @@
         // Handle search
         function handleSearch(e) {
             const query = e.target.value.toLowerCase();
-            filteredWriteups = writeups.filter(writeup => {
+            filteredWriteups = allWriteups.filter(writeup => {
                 return (
                     writeup.title.toLowerCase().includes(query) ||
                     writeup.description.toLowerCase().includes(query) ||
-                    writeup.tags.some(tag => tag.toLowerCase().includes(query))
+                    (writeup.tags || []).some(tag => tag.toLowerCase().includes(query))
                 );
             });
             
@@ -723,9 +740,9 @@
             
             // Apply filter
             if (currentFilter === 'all') {
-                filteredWriteups = [...writeups];
+                filteredWriteups = [...allWriteups];
             } else {
-                filteredWriteups = writeups.filter(writeup => 
+                filteredWriteups = allWriteups.filter(writeup => 
                     writeup.category === currentFilter
                 );
             }
@@ -737,7 +754,7 @@
                     return (
                         writeup.title.toLowerCase().includes(searchQuery) ||
                         writeup.description.toLowerCase().includes(searchQuery) ||
-                        writeup.tags.some(tag => tag.toLowerCase().includes(searchQuery))
+                        (writeup.tags || []).some(tag => tag.toLowerCase().includes(searchQuery))
                     );
                 });
             }
@@ -746,8 +763,8 @@
         }
 
         // Open writeup modal
-        function openWriteup(id) {
-            const writeup = writeups.find(w => w.id === id);
+        async function openWriteup(id) {
+            const writeup = allWriteups.find(w => w.id === id);
             if (!writeup) return;
 
             const modal = document.getElementById('writeup-modal');
@@ -759,24 +776,63 @@
             modalMeta.innerHTML = `
                 <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem;">
                     <span><i class="fas fa-calendar"></i> ${formatDate(writeup.date)}</span>
-                    <span class="difficulty-badge difficulty-${writeup.difficulty}">
-                        ${writeup.difficulty.charAt(0).toUpperCase() + writeup.difficulty.slice(1)}
+                    <span class="difficulty-badge difficulty-${writeup.difficulty || 'medium'}">
+                        ${(writeup.difficulty || 'medium').charAt(0).toUpperCase() + (writeup.difficulty || 'medium').slice(1)}
                     </span>
-                    <span><i class="fas fa-clock"></i> ${writeup.readTime}</span>
+                    <span><i class="fas fa-clock"></i> ${writeup.readTime || '10 min'}</span>
                 </div>
                 <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                    ${writeup.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                    ${(writeup.tags || []).map(tag => `<span class="tag">#${tag}</span>`).join('')}
                 </div>
             `;
 
-            // In real implementation, this would fetch from /assets/writeups/${writeup.folder}/README.md
-            modalBody.innerHTML = getWriteupContent(writeup.folder);
-
+            // Load writeup content
+            modalBody.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading writeup...</p></div>';
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
 
-            // Highlight code blocks
-            Prism.highlightAllUnder(modalBody);
+            try {
+                const response = await fetch(`./assets/writeups/${writeup.folder}/README.md`);
+                if (!response.ok) {
+                    throw new Error('Failed to load writeup content');
+                }
+                const markdown = await response.text();
+                
+                // Configure marked options
+                marked.setOptions({
+                    highlight: function(code, lang) {
+                        if (Prism.languages[lang]) {
+                            return Prism.highlight(code, Prism.languages[lang], lang);
+                        }
+                        return code;
+                    },
+                    breaks: true,
+                    gfm: true
+                });
+
+                // Convert markdown to HTML
+                const html = marked.parse(markdown);
+                
+                // Update image paths to be relative to the writeup folder
+                const htmlWithFixedImages = html.replace(
+                    /src="(?!http)([^"]*)"/g,
+                    `src="./assets/writeups/${writeup.folder}/$1"`
+                );
+
+                modalBody.innerHTML = htmlWithFixedImages;
+
+                // Highlight code blocks
+                Prism.highlightAllUnder(modalBody);
+            } catch (error) {
+                console.error('Error loading writeup:', error);
+                modalBody.innerHTML = `
+                    <div class="error-message">
+                        <h3>Failed to load writeup content</h3>
+                        <p>Please ensure README.md exists in /assets/writeups/${writeup.folder}/</p>
+                        <p>Error: ${error.message}</p>
+                    </div>
+                `;
+            }
         }
 
         // Close writeup modal
@@ -786,55 +842,13 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Get writeup content (mock function - in real implementation, fetch from GitHub)
-        function getWriteupContent(folder) {
-            // This would normally fetch from: /assets/writeups/${folder}/README.md
-            return `
-                <h2>Overview</h2>
-                <p>This is a sample writeup content that would be loaded from <code>/assets/writeups/${folder}/README.md</code></p>
-                
-                <h3>Initial Reconnaissance</h3>
-                <p>Starting with basic enumeration using nmap:</p>
-                <pre><code class="language-bash">nmap -sC -sV -oN initial.nmap 10.10.10.1</code></pre>
-                
-                <h3>Exploitation</h3>
-                <blockquote>
-                <p>Always ensure you have proper authorization before testing any vulnerabilities.</p>
-                </blockquote>
-                
-                <p>The target was vulnerable to:</p>
-                <ul>
-                <li>SQL Injection in login form</li>
-                <li>File upload bypass</li>
-                <li>Local privilege escalation via kernel exploit</li>
-                </ul>
-                
-                <h3>Tools Used</h3>
-                <p>Primary tools utilized during this engagement:</p>
-                <pre><code class="language-python">
-# Custom SQL injection script
-import requests
-
-def test_sqli(url, payload):
-    data = {'username': payload, 'password': 'test'}
-    response = requests.post(url, data=data)
-    return "error" not in response.text.lower()
-                </code></pre>
-                
-                <h3>Conclusion</h3>
-                <p>This writeup demonstrates the importance of proper input validation and regular security assessments.</p>
-                
-                <p><em>For the complete writeup with all technical details, screenshots, and code samples, check the full content in the GitHub repository at <code>/assets/writeups/${folder}/</code></em></p>
-            `;
-        }
-
         // Format date
         function formatDate(dateString) {
             const options = { year: 'numeric', month: 'short', day: 'numeric' };
             return new Date(dateString).toLocaleDateString('en-US', options);
         }
 
-        // Initialize the application
+        // Initialize when DOM is ready
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
