@@ -1,6 +1,16 @@
 {
   "writeups": [
     {
+      "id": "krilin-security-framework",
+      "title": "Build your own HACKING OS",
+      "description": "Build your own Hacking Os from scratch the easy way",
+      "category": "tutorial",
+      "tags": ["Hacking", "Red-teaming"],
+      "difficulty": "medium",
+      "date": "2024-08-25",
+      "readTime": "10 min",
+      "folder": "krilin-security-framework"
+}
       "id": "example-writeup",
       "title": "My First Writeup - Getting Started",
       "description": "This is an example writeup to test the blog functionality.",
