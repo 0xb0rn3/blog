@@ -1,0 +1,15 @@
+{
+  "writeups": [
+    {
+      "id": "example-writeup",
+      "title": "My First Writeup - Getting Started",
+      "description": "This is an example writeup to test the blog functionality.",
+      "category": "tutorial",
+      "tags": ["example", "test", "blog"],
+      "difficulty": "easy",
+      "date": "2024-08-25",
+      "readTime": "5 min",
+      "folder": "example-writeup"
+    }
+  ]
+}
